@@ -7,3 +7,4 @@ wavinAhc9000/__pycache__
 wavinAhc9000/__pycache__/__init__.cpython-36.pyc
 *.bak
 *.pyc
+**/.vs/
