@@ -141,6 +141,10 @@ public:
     user_function_select_ = user_function_select;
   }
 
+  void set_user_function_actual_sensor(text_sensor::TextSensor *user_function_actual_sensor) {
+    user_function_actual_sensor_ = user_function_actual_sensor;
+  }
+
   // void add_target_temp_callback(std::function<void(float)> &&callback);
   // void add_fan_speed_callback(std::function<void(int)> &&callback);
   // void add_operation_mode_callback(std::function<void(int)>&& callback);
@@ -155,6 +159,7 @@ public:
   void handleDiscreteIOInputData(const std::vector<uint8_t>& data);
   void handleAnalogIOInputData(const std::vector<uint8_t>& data);
   void handleAlarmInputData(const std::vector<uint8_t>& data);
+  void handleUserFunctionsHoldingData(const std::vector<uint8_t>& data);  
   void handleControlInputData(const std::vector<uint8_t>& data);
   void handleAirflowInputData(const std::vector<uint8_t>& data);
   void handleAirtempInputData(const std::vector<uint8_t>& data);
@@ -198,6 +203,7 @@ protected:
     discrete_io_input,
     analog_io_input,
     alarm_input,
+    user_functions_holding,
     control_input,
     airflow_input,
     airtemp_input,
@@ -221,6 +227,7 @@ protected:
     discrete_io_input,
     analog_io_input,
     alarm_input,
+    user_functions_holding,
     control_input,
     // airflow_input,
     airtemp_input,
@@ -270,6 +277,7 @@ protected:
   text_sensor::TextSensor *operation_mode_sensor_;
   text_sensor::TextSensor *display_line1_sensor_;
   text_sensor::TextSensor *display_line2_sensor_;
+  text_sensor::TextSensor *user_function_actual_sensor_;
   select::Select *user_function_select_;
 
   CallbackManager<void(float)>target_temp_callback_;
@@ -277,8 +285,7 @@ protected:
   CallbackManager<void(int)>operation_mode_callback_;
 
 private:
-
-  void     writeModbusRegister(WriteableData write_data);
+  void writeModbusRegister(WriteableData write_data);
   uint16_t get_16bit(const std::vector<uint8_t>& data, size_t i) {
     return (uint16_t(data[i]) << 8) | uint16_t(data[i + 1]);
   }
