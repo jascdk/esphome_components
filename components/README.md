@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # custom_components
 =======
 ## ESPHome custom components
@@ -455,4 +454,3 @@ binary_sensor:
   - platform: status
     name: "Genvex Wavin Controller Status"
 ```
->>>>>>> 1cb774b (Removed wavinAhc9000 and genvex components. Not relevant for this nilan project. If used by anyone, please use the upstream project from heinekmadsen instead. Moved nilan to components folder to prepare for external_components support)
