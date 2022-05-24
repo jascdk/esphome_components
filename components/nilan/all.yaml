@@ -82,6 +82,7 @@ sensor:
     modbus_controller_id: nilan_modbus_controller
     name: "Bus version"
     id: nilan_bus_version
+    skip_updates: 60
     internal: true
     accuracy_decimals: 0
     entity_category: diagnostic
@@ -162,7 +163,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 1 date"
+    internal: true
     id: nilan_alarm_list_1_date
     accuracy_decimals: 0
     register_type: read
@@ -170,7 +171,7 @@ sensor:
     
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 1 time"
+    internal: true
     id: nilan_alarm_list_1_time
     accuracy_decimals: 0
     register_type: read
@@ -186,7 +187,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 2 date"
+    internal: true
     id: nilan_alarm_list_2_date
     accuracy_decimals: 0
     register_type: read
@@ -194,7 +195,7 @@ sensor:
     
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 2 time"
+    internal: true
     id: nilan_alarm_list_2_time
     accuracy_decimals: 0
     register_type: read
@@ -210,7 +211,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 3 date"
+    internal: true
     id: nilan_alarm_list_3_date
     accuracy_decimals: 0
     register_type: read
@@ -218,7 +219,7 @@ sensor:
     
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
-    name: "Alarm list 3 time"
+    internal: true
     id: nilan_alarm_list_3_time
     accuracy_decimals: 0
     register_type: read
@@ -447,11 +448,80 @@ text_sensor:
     name: "Air Quality Index CO2 (AQI)"
     id: aqi_co2
     icon: mdi:air-filter    
-
+  - platform: template
+    name: "Alarm 1 timestamp"
+    id: nilan_alarm_list_1_datetime
+    lambda: |-
+      uint16_t alarmDate = id(nilan_alarm_list_1_date).state;
+      uint16_t alarmTime = id(nilan_alarm_list_1_time).state;
+      
+      if(!alarmDate ||!alarmTime) return std::string("");
+      
+      // Parse the date
+      auto year = (alarmDate >> 9) + 1980;
+      auto month = (alarmDate >> 5) & 0b00001111;
+      auto day = alarmDate & 0b00011111;
+      auto hour = (alarmTime >> 11) & 0b00011111;
+      auto minute = (alarmTime >> 5) & 0b0011111;
+      auto second = (alarmTime & 0b00011111) * 2;
+      
+      return std::to_string(year) + "-" +
+        ((month < 10) ? "0" : "") + std::to_string(month) + "-" + 
+        ((day < 10) ? "0" : "") + std::to_string(day) + " " +
+        ((hour < 10) ? "0" : "") + std::to_string(hour) + ":" +
+        ((minute < 10) ? "0" : "") + std::to_string(minute) + ":" +
+        ((second < 10) ? "0" : "") + std::to_string(second);
+  - platform: template
+    name: "Alarm 2 timestamp"
+    id: nilan_alarm_list_2_datetime
+    lambda: |-
+      uint16_t alarmDate = id(nilan_alarm_list_2_date).state;
+      uint16_t alarmTime = id(nilan_alarm_list_2_time).state;
+      
+      if(!alarmDate ||!alarmTime) return std::string("");
+      
+      // Parse the date
+      auto year = (alarmDate >> 9) + 1980;
+      auto month = (alarmDate >> 5) & 0b00001111;
+      auto day = alarmDate & 0b00011111;
+      auto hour = (alarmTime >> 11) & 0b00011111;
+      auto minute = (alarmTime >> 5) & 0b0011111;
+      auto second = (alarmTime & 0b00011111) * 2;
+      
+      return std::to_string(year) + "-" +
+        ((month < 10) ? "0" : "") + std::to_string(month) + "-" + 
+        ((day < 10) ? "0" : "") + std::to_string(day) + " " +
+        ((hour < 10) ? "0" : "") + std::to_string(hour) + ":" +
+        ((minute < 10) ? "0" : "") + std::to_string(minute) + ":" +
+        ((second < 10) ? "0" : "") + std::to_string(second);
+  - platform: template
+    name: "Alarm 3 timestamp"
+    id: nilan_alarm_list_3_datetime
+    lambda: |-
+      uint16_t alarmDate = id(nilan_alarm_list_3_date).state;
+      uint16_t alarmTime = id(nilan_alarm_list_3_time).state;
+      
+      if(!alarmDate ||!alarmTime) return std::string("");
+      
+      // Parse the date
+      auto year = (alarmDate >> 9) + 1980;
+      auto month = (alarmDate >> 5) & 0b00001111;
+      auto day = alarmDate & 0b00011111;
+      auto hour = (alarmTime >> 11) & 0b00011111;
+      auto minute = (alarmTime >> 5) & 0b0011111;
+      auto second = (alarmTime & 0b00011111) * 2;
+      
+      return std::to_string(year) + "-" +
+        ((month < 10) ? "0" : "") + std::to_string(month) + "-" + 
+        ((day < 10) ? "0" : "") + std::to_string(day) + " " +
+        ((hour < 10) ? "0" : "") + std::to_string(hour) + ":" +
+        ((minute < 10) ? "0" : "") + std::to_string(minute) + ":" +
+        ((second < 10) ? "0" : "") + std::to_string(second);
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
     name: "Software version"
     id: nilan_version_info
+    skip_updates: 60
     register_type: read
     register_count: 3
     response_size: 6
@@ -503,6 +573,58 @@ text_sensor:
         default: actual_user_function = ""; break;
       }
       return actual_user_function;
+
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Aggregate type"
+    id: nilan_platform_id
+    entity_category: diagnostic
+    skip_updates: 60
+    register_type: holding
+    address: 1000
+    lambda: !lambda |-
+      uint16_t int_type = (data[item->offset] << 8) + data[item->offset+1];
+      ESP_LOGD("main","Parsed aggregate type int : %d", int_type);
+      std::string type_str;
+      switch (int_type) {
+        case 0: type_str = "None"; break;
+        case 1: type_str = "Test"; break;
+        case 2: type_str = "VPL 10 uden køl"; break;
+        case 3: type_str = "VPL 15 uden køl"; break;
+        case 4: type_str = "VPL 15 med køl"; break;
+        case 5: type_str = "VPL 25 med 3 hastigheder uden køl"; break;
+        case 6: type_str = "VPL 25 med 3 hastigheder med køl"; break;
+        case 7: type_str = "VPL 28 2 hastigheder uden køl"; break;
+        case 8: type_str = "VPL 28 med 2 hastigheder med køl"; break;
+        case 9: type_str = "VP 18 med kryds monteret oven på anlæg uden køl"; break;
+        case 10: type_str = "VP 18 med kryds monteret oven på anlæg med køl"; break;
+        case 11: type_str = "Vp 18 Compact og Compact p uden køl"; break;
+        case 12: type_str = "VP 18 Compact og Compact P med køl"; break;
+        case 13: type_str = "Comfort anlæg (Comfort 300 LR)"; break;
+        case 14: type_str = "CT 150 anlæg med 1-2-3 omskifter"; break;
+        case 15: type_str = "VLX som kører VAV"; break;
+        case 16: type_str = "VLX med 2 trin"; break;
+        case 17: type_str = "VLX med 3 trin"; break;
+        case 18: type_str = "VP 18 uden køl"; break;
+        case 19: type_str = "VP 18 med køl"; break;
+        case 20: type_str = "VP 18 med elkedel uden køl"; break;
+        case 21: type_str = "VP 18 med elkedel og køl"; break;
+        case 22: type_str = "VGU 250 brugsvands varmepumpe"; break;
+        case 23: type_str = "VGU 250 brugsvands varmepumpe med elkedel"; break;
+        case 24: type_str = "VPL 25 uden køl"; break;
+        case 25: type_str = "VPL 25 med køl"; break;
+        case 26: type_str = "VPM 120-560"; break;
+        case 27: type_str = "Comfort 1200 - 4000"; break;
+        case 28: type_str = "VP 20 Compact gorona"; break;
+        case 29: type_str = "VLX med CTS 602 print"; break;
+        case 30: type_str = "Compact P Nordic"; break;
+        case 31: type_str = "Comfort Nordic"; break;
+        case 32: type_str = "VP 18 Version 1"; break;
+        case 33: type_str = "Combi 300"; break;
+        case 34: type_str = "Compact med 4-vejsventil uden køl"; break;
+        default: type_str = "Unknown"; break;
+      }
+      return type_str;
 
 switch:
   - platform: modbus_controller
