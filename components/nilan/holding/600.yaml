@@ -1,0 +1,21 @@
+text_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Active user function"
+    id: nilan_active_user_function
+    register_type: holding
+    address: 600
+    lambda: !lambda |-
+      uint16_t int_user_function = (data[item->offset] << 8) + data[item->offset+1];
+      ESP_LOGD("main","Parsed user function int : %d", int_user_function);
+
+      switch(int_user_function) {
+        case 0: return "0 : None";
+        case 1: return "1 : Extend";
+        case 2: return "2 : Inlet";
+        case 3: return "3 : Exhaust";
+        case 4: return "4 : External heater offset";
+        case 5: return "5 : Ventilate";
+        case 6: return "6 : Cooker Hood";
+        default: return "";
+      }
