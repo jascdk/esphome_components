@@ -1,7 +1,6 @@
 packages:
   remote_package:
     url: https://github.com/Jopand/esphome_components
-    ref: split_into_separate_files
     files:
       - components/nilan/basic.yaml
       ### INPUT REGISTER FILES ###
