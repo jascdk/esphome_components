@@ -8,9 +8,9 @@ packages:
     ref: split_into_separate_files
     files:
       ### INPUT REGISTER FILES ###
-      - components/nilan/holding/221.yaml
-      - components/nilan/holding/1001.yaml
-      - components/nilan/holding/1002.yaml
+      - components/nilan/input/221.yaml
+      - components/nilan/input/1001.yaml
+      - components/nilan/input/1002.yaml
       ### HOLDING REGISTER FILES ###
       - components/nilan/holding/200.yaml
       - components/nilan/holding/201.yaml
