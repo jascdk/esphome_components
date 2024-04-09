@@ -10,12 +10,12 @@ text_sensor:
       ESP_LOGD("main","Parsed user function int : %d", int_user_function);
 
       switch(int_user_function) {
-        case 0: return "0 : None";
-        case 1: return "1 : Extend";
-        case 2: return "2 : Inlet";
-        case 3: return "3 : Exhaust";
-        case 4: return "4 : External heater offset";
-        case 5: return "5 : Ventilate";
-        case 6: return "6 : Cooker Hood";
-        default: return "";
+        case 0: return esphome::optional<std::string>("0 : None");
+        case 1: return esphome::optional<std::string>("1 : Extend");
+        case 2: return esphome::optional<std::string>("2 : Inlet");
+        case 3: return esphome::optional<std::string>("3 : Exhaust");
+        case 4: return esphome::optional<std::string>("4 : External heater offset");
+        case 5: return esphome::optional<std::string>("5 : Ventilate");
+        case 6: return esphome::optional<std::string>("6 : Cooker Hood");
+        default: return esphome::optional<std::string>("");
       }
