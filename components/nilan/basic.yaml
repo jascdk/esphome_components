@@ -183,7 +183,6 @@ text_sensor:
         case 4: return esphome::optional<std::string>("Service");
         default: return esphome::optional<std::string>("Unknown");
       }
-      return mode_str;
 
   - platform: modbus_controller
     modbus_controller_id: nilan_modbus_controller
@@ -215,7 +214,6 @@ text_sensor:
         case 16: return esphome::optional<std::string>("Alarm");
         default: return esphome::optional<std::string>("Unknown");
       }
-      return mode_str;
 
 climate:
   - platform: nilan
