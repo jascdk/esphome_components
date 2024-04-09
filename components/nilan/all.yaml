@@ -4,6 +4,7 @@ packages:
     ref: split_into_separate_files
     files:
       - components/nilan/basic.yaml
+      ### INPUT REGISTER FILES ###
       - components/nilan/input/0.yaml
       - components/nilan/input/1.yaml
       - components/nilan/input/100.yaml
@@ -31,131 +32,25 @@ packages:
       - components/nilan/input/1203.yaml
       - components/nilan/input/1205.yaml
       - components/nilan/input/1206.yaml
+      ### HOLDING REGISTER FILES ###
+      - components/nilan/holding/123.yaml
+      - components/nilan/holding/125.yaml
+      - components/nilan/holding/500.yaml
+      - components/nilan/holding/600.yaml
+      - components/nilan/holding/602.yaml
+      - components/nilan/holding/603.yaml
+      - components/nilan/holding/604.yaml
+      - components/nilan/holding/605.yaml
+      - components/nilan/holding/1000.yaml
+      - components/nilan/holding/1001.yaml
+      - components/nilan/holding/1910.yaml
+      - components/nilan/holding/1911.yaml
+      - components/nilan/holding/1912.yaml
+      - components/nilan/holding/1913.yaml
+      - components/nilan/holding/1920.yaml
+      - components/nilan/holding/1921.yaml
+      - components/nilan/holding/1922.yaml
     refresh: 0s
-  
-  basic_yaml: !include basic.yaml
-
-  0_input: !include input/0.yaml
-  1_input: !include input/1.yaml
-  100_input: !include input/100.yaml
-  103_input: !include input/103.yaml
-  107_input: !include input/107.yaml
-  200_input: !include input/200.yaml
-  210_input: !include input/210.yaml
-  215_input: !include input/215.yaml
-  222_input: !include input/222.yaml
-  400_input: !include input/400.yaml
-  401_input: !include input/401.yaml
-  402_input: !include input/402.yaml
-  403_input: !include input/403.yaml
-  404_input: !include input/404.yaml
-  405_input: !include input/405.yaml
-  406_input: !include input/406.yaml
-  407_input: !include input/407.yaml
-  408_input: !include input/408.yaml
-  409_input: !include input/409.yaml
-  1000_input: !include input/1000.yaml
-  1003_input: !include input/1003.yaml
-  1200_input: !include input/1200.yaml
-  1201_input: !include input/1201.yaml
-  1202_input: !include input/1202.yaml
-  1203_input: !include input/1203.yaml
-  1205_input: !include input/1205.yaml
-  1206_input: !include input/1206.yaml
-
-  123_holding: !include holding/123.yaml
-  125_holding: !include holding/125.yaml
-  500_holding: !include holding/500.yaml
-  602_holding: !include holding/602.yaml
-  603_holding: !include holding/603.yaml
-  604_holding: !include holding/604.yaml
-  605_holding: !include holding/605.yaml
-  1000_holding: !include holding/1000.yaml
-
-number:
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "Humidity low vent step"
-    id: humidity_low_vent_step
-    min_value: 0.0
-    max_value: 4.0
-    step: 1.0
-    address: 1910
-    force_new_range: true
-    use_write_multiple: true
-    
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "Humidity high vent step"
-    id: humidity_high_vent_step
-    min_value: 0.0
-    max_value: 4.0
-    step: 1.0
-    address: 1911
-    force_new_range: true
-    use_write_multiple: true 
-
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "Humidity limit low vent"
-    id: humidity_limit_low_vent    
-    unit_of_measurement: '%'
-    icon: "mdi:percent"
-    min_value: 15.0
-    max_value: 45.0
-    step: 1.0
-    address: 1912
-    force_new_range: true
-    use_write_multiple: true
-    multiply: 100
-
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "Humidity max time on high ventilation (minutes)"
-    id: humidity_max_time_high_vent
-    value_type: U_WORD
-    unit_of_measurement: minutes
-    min_value: 0.0
-    max_value: 180.0
-    step: 1.0
-    address: 1913
-    force_new_range: true
-    use_write_multiple: true
-    icon: mdi:clock-start
-
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "CO2 high vent step"
-    id: co2_high_vent_step
-    min_value: 0.0
-    max_value: 4.0
-    step: 1.0
-    address: 1920
-    force_new_range: true
-    use_write_multiple: true
-
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "CO2 limit normal ventilation"
-    id: co2_limit_normal_ventilation
-    min_value: 400
-    max_value: 750
-    step: 1.0
-    address: 1921
-    force_new_range: true
-    use_write_multiple: true
-    mode: slider
-
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "CO2 limit high ventilation"
-    id: co2_limit_high_ventilation
-    min_value: 650
-    max_value: 800
-    step: 1.0
-    address: 1922
-    force_new_range: true
-    use_write_multiple: true
 
 text_sensor:
   - platform: template
@@ -231,18 +126,3 @@ text_sensor:
         ((hour < 10) ? "0" : "") + std::to_string(hour) + ":" +
         ((minute < 10) ? "0" : "") + std::to_string(minute) + ":" +
         ((second < 10) ? "0" : "") + std::to_string(second);
-
-
-
-
-
-switch:
-  - platform: modbus_controller
-    modbus_controller_id: nilan_modbus_controller
-    name: "On/Off state"
-    id: nilan_on_off_state
-    register_type: holding
-    bitmask: 1
-    force_new_range: true
-    use_write_multiple: true
-    address: 1001

@@ -174,14 +174,14 @@ text_sensor:
     lambda: !lambda |-
       uint16_t int_mode = (data[item->offset] << 8) + data[item->offset+1];
       ESP_LOGD("main","Parsed operation mode int : %d", int_mode);
-      std::string mode_str;
+
       switch (int_mode) {
-        case 0: mode_str = "Off"; break;
-        case 1: mode_str = "Heat"; break;
-        case 2: mode_str = "Cool"; break;
-        case 3: mode_str = "Auto"; break;
-        case 4: mode_str = "Service"; break;
-        default: mode_str = "Unknown"; break;
+        case 0: return esphome::optional<std::string>("Off");
+        case 1: return esphome::optional<std::string>("Heat");
+        case 2: return esphome::optional<std::string>("Cool");
+        case 3: return esphome::optional<std::string>("Auto");
+        case 4: return esphome::optional<std::string>("Service");
+        default: return esphome::optional<std::string>("Unknown");
       }
       return mode_str;
 
@@ -194,26 +194,26 @@ text_sensor:
     lambda: !lambda |-
       uint16_t int_mode = (data[item->offset] << 8) + data[item->offset+1];
       ESP_LOGD("main","Parsed operation mode int : %d", int_mode);
-      std::string mode_str;
+
       switch (int_mode) {
-        case 0:  mode_str = "Off"; break;
-        case 1:  mode_str = "Shift"; break;
-        case 2:  mode_str = "Stop"; break;
-        case 3:  mode_str = "Start"; break;
-        case 4:  mode_str = "Standby"; break;
-        case 5:  mode_str = "Ventilation stop"; break;
-        case 6:  mode_str = "Ventilation"; break;
-        case 7:  mode_str = "Heating"; break;
-        case 8:  mode_str = "Cooling"; break;
-        case 9:  mode_str = "Hot water"; break;
-        case 10: mode_str = "Legionella"; break;
-        case 11: mode_str = "Cooling + hot water"; break;
-        case 12: mode_str = "Central heating"; break;
-        case 13: mode_str = "Defrost"; break;
-        case 14: mode_str = "Frost secure"; break;
-        case 15: mode_str = "Service"; break;
-        case 16: mode_str = "Alarm"; break;
-        default: mode_str = "Unknown"; break;
+        case 0:  return esphome::optional<std::string>("Off")
+        case 1:  return esphome::optional<std::string>("Shift")
+        case 2:  return esphome::optional<std::string>("Stop")
+        case 3:  return esphome::optional<std::string>("Start")
+        case 4:  return esphome::optional<std::string>("Standby")
+        case 5:  return esphome::optional<std::string>("Ventilation stop")
+        case 6:  return esphome::optional<std::string>("Ventilation")
+        case 7:  return esphome::optional<std::string>("Heating")
+        case 8:  return esphome::optional<std::string>("Cooling")
+        case 9:  return esphome::optional<std::string>("Hot water")
+        case 10: return esphome::optional<std::string>("Legionella")
+        case 11: return esphome::optional<std::string>("Cooling + hot water")
+        case 12: return esphome::optional<std::string>("Central heating")
+        case 13: return esphome::optional<std::string>("Defrost")
+        case 14: return esphome::optional<std::string>("Frost secure")
+        case 15: return esphome::optional<std::string>("Service")
+        case 16: return esphome::optional<std::string>("Alarm")
+        default: return esphome::optional<std::string>("Unknown")
       }
       return mode_str;
 
