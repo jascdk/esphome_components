@@ -12,6 +12,6 @@ sensor:
       - multiply: 0.01
     on_value: 
       - lambda: !lambda |-
-          id(aqi_humidity).publish_state( (x < 35) ? "Too Dry" : 
+          id(nilan_aqi_humidity).publish_state( (x < 35) ? "Too Dry" : 
                                           (x < 65) ? "Perfect" : 
                                           "Too Humid");

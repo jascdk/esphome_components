@@ -1,0 +1,12 @@
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Max summer temperature"
+    id: nilan_max_summer_temp
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    register_type: holding
+    address: 1203
+    filters:
+      - multiply: 0.01 

@@ -26,15 +26,25 @@ packages:
 
 nilan:
 
+sensor:
+  - platform: template
+    name: "Calculated difference exhaust and inlet"
+    id: nilan_calculated_value_inlet_exhaust
+    icon: "mdi:thermometer"
+    unit_of_measurement: °C
+    update_interval: 10s
+    lambda: 'return id(nilan_exhaust_temp_t3).state - id(nilan_inlet_temp_t7).state;'
+
 text_sensor:
   - platform: template
     name: "Air Quality Index Humidity (AQI)"
-    id: aqi_humidity
+    id: nilan_aqi_humidity
     icon: mdi:water-percent 
 
 climate:
   - platform: nilan
     name: Nilan
+    id: nilan_climate
     current_temp_sensor_id: nilan_inlet_temp_t7
     target_temp_sensor_id: nilan_target_temperature_set
     fan_speed_sensor_id: nilan_ventilation_speed_set
