@@ -35,6 +35,12 @@ packages:
       ### HOLDING REGISTER FILES ###
       - components/nilan/holding/123.yaml
       - components/nilan/holding/125.yaml
+      - components/nilan/holding/300.yaml
+      - components/nilan/holding/301.yaml
+      - components/nilan/holding/302.yaml
+      - components/nilan/holding/303.yaml
+      - components/nilan/holding/304.yaml
+      - components/nilan/holding/305.yaml
       - components/nilan/holding/500.yaml
       - components/nilan/holding/600.yaml
       - components/nilan/holding/602.yaml
